@@ -1,0 +1,18 @@
+import codecs
+import json
+import geoip2.database
+
+
+reader = geoip2.database.Reader('GeoLite2-Country.mmdb.json')
+city_reader = geoip2.database.Reader('GeoLite2-city.mmdb.json')
+
+def country_name(ip):
+    data = reader.country(ip)
+    return data.country.name
+
+def subdivisions_name(ip):
+    data = city_reader.city(ip)
+    return data.subdivisions.most_specific.names['zh-CN']
+
+print(country_name("8.8.8.8"))
+print(subdivisions_name("14.215.177.39"))
